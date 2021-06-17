@@ -2,7 +2,6 @@ import {
   Link, Switch, Route
 } from "react-router-dom";
 
-
 function MeseroPage() {
   //'path' nos permite construir rutas relativas <Route> , mientras que 'url' nos permite construir enlaces relativos<Link>o<NavLink>
   
@@ -21,7 +20,9 @@ function MeseroPage() {
           </li>
         </ul>
         <Switch>
-          <Route></Route>
+          <Route>
+    
+          </Route>
         </Switch>
       </div>
     );

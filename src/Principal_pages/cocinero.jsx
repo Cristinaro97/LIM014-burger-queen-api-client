@@ -16,7 +16,6 @@ function CocineroPage() {
         </ul>
         <Switch>
           <Route>
-  
           </Route>
         </Switch>
       </div>
