@@ -1,9 +1,28 @@
 import {
   Link, Switch, Route
 } from "react-router-dom";
-
+import React, {useEffect} from 'react';
+import axios from 'axios';
 
 function AdmintradorPage() {
+
+  const URL_API = 'http://localhost:3000/users'
+  
+  useEffect(()=>{  
+    var token = localStorage.getItem('token');
+    axios({ method: 'get', url: URL_API,hearder:{"Authorization": `Bearer ${token}`,
+  }})
+       .then(function (response) {
+    // handle success
+       console.log(response);
+     })
+       .catch(function (error) {
+    // handle error
+        console.log(error);
+     })
+    
+   
+});
   return (
     <div>
       <h1>Menú de Administrador</h1>
