@@ -15,7 +15,7 @@ import LoginPage from '../Principal_pages/login'
 function RouterApp() {
   return (
     <Router>
-        <MenuPrincipal/>
+       <MenuPrincipal/>
         <Switch>
         <Route exact path = "/">
             <LoginPage/>
