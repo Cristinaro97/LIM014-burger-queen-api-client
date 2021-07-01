@@ -8,19 +8,17 @@ import {
 import AdmintradorPage from '../Principal_pages/administrador';
 import CocineroPage from '../Principal_pages/cocinero';
 import MeseroPage from '../Principal_pages/mesero';
-import MenuPrincipal from '../menu';
 import LoginPage from '../Principal_pages/login'
 
 
 function RouterApp() {
   return (
     <Router>
-       <MenuPrincipal/>
         <Switch>
         <Route exact path = "/">
             <LoginPage/>
         </Route>
-        <Route exact path = "/mesero">
+        <Route path = "/mesero">
             <MeseroPage/>
         </Route>
         <Route exact path = "/cocinero">

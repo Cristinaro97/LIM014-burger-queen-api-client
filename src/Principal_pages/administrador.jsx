@@ -5,7 +5,6 @@ import {END_POINT_USERS} from '../config'
 
 function AdmintradorPage() {
  
-
   useEffect(() => {
     var token = localStorage.getItem("token");
     axios({
@@ -31,6 +30,9 @@ function AdmintradorPage() {
         </li>
         <li>
           <Link to="/administrador/menu">Lista de Menú</Link>
+        </li>
+        <li>
+          <Link to="/">Cerrar Sesión</Link>
         </li>
       </ul>
       <Switch>

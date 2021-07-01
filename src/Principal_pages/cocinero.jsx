@@ -13,6 +13,9 @@ function CocineroPage() {
           <li>
             <Link to="/cocinero/estadopedidos">Estado de Pedidos</Link>
           </li>
+          <li>
+          <Link to="/">Cerrar Sesión</Link>
+        </li>
         </ul>
         <Switch>
           <Route>
