@@ -1,7 +1,9 @@
 import { Link, Switch, Route } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import axios from "axios";
 import {END_POINT_USERS} from '../config'
+import Navigation from "../components/Navigation";
+import Employess from "./Employess";
 
 function AdmintradorPage() {
  
@@ -22,23 +24,9 @@ function AdmintradorPage() {
       });
   });
   return (
-    <div>
-      <h1>Menú de Administrador</h1>
-      <ul>
-        <li>
-          <Link to="/administrador/empleados">Lista de Empleados</Link>
-        </li>
-        <li>
-          <Link to="/administrador/menu">Lista de Menú</Link>
-        </li>
-        <li>
-          <Link to="/">Cerrar Sesión</Link>
-        </li>
-      </ul>
-      <Switch>
-        <Route></Route>
-      </Switch>
-    </div>
+    <Fragment>
+        <Employess/>
+    </Fragment>
   );
 }
 

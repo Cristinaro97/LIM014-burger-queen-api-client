@@ -25,28 +25,39 @@ function LoginPage() {
       return result;
     };
 
-    const getRol = async () => {
-      const token = localStorage.getItem("token");
-      const result = axios({
-        method: "get",
-        url: `${END_POINT_USERS}/${document.getElementById("txtEmail").value}`,
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    const getUser = async (access_token, user_email) => {
+      const result = await axios
+        .get(`${END_POINT_USERS}/${user_email}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${access_token}`
+            }
+          }
+        )
+        .catch((error) => {
+          alert("ERROR OBTENIENDO USUARIO DEL API");
+        });
+
       return result;
     };
 
+
     getToken().then((result) => {
       if (result !== undefined) {
-        localStorage.setItem("token", result.data.token);
-        getRol().then((response) => {
-          if (response.data.rol.admin) {
-            history.push("/administrador");
-          } else if (response.data.rol.name === "cocinero") {
-            history.push("/cocinero");
-          } else if (response.data.rol.name === "mesero") {
-            history.push("/mesero");
-          }
-        });
+        const access_token = result.data.token;
+        localStorage.setItem("token", access_token);
+        const user_email = document.getElementById("txtEmail").value;
+        getUser(access_token, user_email).then((responseUser) => {
+          
+          const isAdmin = responseUser.data.roles.admin;
+            if(isAdmin===true){
+              history.push('/administrador');
+            }else{
+              history.push('/seleccion');
+            }
+
+        })
+
       }
     });
   };
