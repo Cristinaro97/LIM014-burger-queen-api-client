@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
     BrowserRouter as Router,
     // Redirect,
@@ -12,10 +12,22 @@ import LoginPage from '../Principal_pages/login'
 import MainPage from '../containers/MainPage';
 import SeleccionRol from '../containers/SeleccionRol';
 import Employess from '../containers/Employess';
+import Navigation from '../components/Navigation';
+import {
+    PANEL_EMPLOYESS,
+    PANEL_PRODUCTS
+} from '../config';
 
 function RouterApp() {
+
+    const [currentPanel, setCurrentPanel] = useState(PANEL_EMPLOYESS);
+
+   
+
+
     return (
         <MainPage>
+           
             <Router>
                 <Switch>
                     <Route exact path="/">
@@ -28,7 +40,8 @@ function RouterApp() {
                         <CocineroPage />
                     </Route>
                     <Route exact path="/administrador">
-                        <AdmintradorPage />
+                        <Navigation setCurrentPanel={setCurrentPanel} />
+                        <AdmintradorPage currentPanel={currentPanel} />
                     </Route>
                     <Route exact path="/administrador/empleados">
                         <Employess />
