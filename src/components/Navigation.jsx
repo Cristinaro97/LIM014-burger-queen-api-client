@@ -7,7 +7,7 @@ import {
 const Navigation = ({setCurrentPanel}) => {
   return (
     <nav>
-      <button>Inicio</button>
+      <h2>BURGERQUEEN</h2>
       <ul>
         <li>
           <button onClick={()=>setCurrentPanel(PANEL_EMPLOYESS)}>Empleados</button>
