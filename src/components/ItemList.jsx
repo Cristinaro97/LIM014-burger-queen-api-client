@@ -1,14 +1,14 @@
 import React from 'react';
 
-const EmployeeItem = ({name}) => {
+const ItemList = ({name, handleEdit}) => {
     return ( 
         <div>
              {name}
-             <button>Edit</button>  
+             <button onClick={handleEdit} >Edit</button>  
              <button>Elim</button>  
         </div>
 
      );
 }
  
-export default EmployeeItem;
+export default ItemList;

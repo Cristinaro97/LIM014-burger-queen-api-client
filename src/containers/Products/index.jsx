@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { END_POINT_PRODUCTS } from "../../config";
-import EmployeeItem from "../../components/EmployeItem";
+import ItemList from "../../components/ItemList";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -33,7 +33,7 @@ const Products = () => {
               <ul>
                   {products.map((product)=>(
                       <li key={product._id}>
-                          <EmployeeItem name={product.name} />
+                          <ItemList name={product.name} />
                       </li>
                   ))}
               </ul>

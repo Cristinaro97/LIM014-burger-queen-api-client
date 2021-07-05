@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { END_POINT_USERS } from "../../config";
-import EmployeeItem from "../../components/EmployeItem";
+import ItemList from "../../components/ItemList";
+import UserForm from "../../components/UserForm";
 
 const Employess = () => {
   const [users, setUsers] = useState([]);
+  const [userSelected, setUserSelected] = useState();
 
   const getAllUsers = async (access_token) => {
     const result = await axios
@@ -20,7 +22,9 @@ const Employess = () => {
     return result;
   };
 
- 
+  const handleEdit = (user) => {
+     setUserSelected(user);
+  }
 
   useEffect(() => {
         const token = localStorage.getItem("token");
@@ -37,12 +41,12 @@ const Employess = () => {
         <ul>
           {users.map((user) => (
             <li key={user._id}>
-              <EmployeeItem name={user.name} />
+              <ItemList name={user.name} handleEdit={()=>{handleEdit(user)}} />
             </li>
           ))}
         </ul>
       </div>
-      Datos del Trabajador
+      <UserForm userSelected = {userSelected}/>
     </div>
   );
 };

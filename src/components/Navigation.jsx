@@ -3,8 +3,10 @@ import {
     PANEL_EMPLOYESS,
     PANEL_PRODUCTS
 } from '../config';
+import { useHistory } from "react-router-dom";
 
 const Navigation = ({setCurrentPanel}) => {
+  const history = useHistory();
   return (
     <nav>
       <h2>BURGERQUEEN</h2>
@@ -16,7 +18,7 @@ const Navigation = ({setCurrentPanel}) => {
           <button onClick={()=>setCurrentPanel(PANEL_PRODUCTS)}>Productos</button>
         </li>
       </ul>
-      <button>Salir</button>
+      <button onClick={() => history.push('/')}>Salir</button>
     </nav>
   );
 };
