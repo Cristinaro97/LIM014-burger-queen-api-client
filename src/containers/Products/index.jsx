@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { END_POINT_PRODUCTS } from "../../config";
-import ItemList from "../../components/ItemList";
+import ItemListProduct from "../../components/ItemListProduct";
+import ProductsForm from "../../components/ProductForm";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [productSelected, setProductSelected] = useState();
 
   const getAllProducts = async (access_token) => {
     const result = await axios
@@ -18,6 +20,7 @@ const Products = () => {
       });
     return result;
   };
+
   useEffect(() => {
       const token = localStorage.getItem("token");
       getAllProducts(token).then((response)=> {
@@ -26,19 +29,34 @@ const Products = () => {
       });
   }, []);
 
+  const handleEditProduct = (product) => {
+    setProductSelected(product);
+  }
+
+  const handleCreateProduct = () => {
+    const newProduct = {
+      name:'',
+      type:'',
+      dateEntry:'',
+      price:'',
+    }
+    setProductSelected(newProduct)
+  }
+
   return (
       <div>
           <div>
+          <button onClick={handleCreateProduct}>+ AGREGAR PRODUCTO</button>
               <h3>Lista de Productos</h3>
               <ul>
                   {products.map((product)=>(
                       <li key={product._id}>
-                          <ItemList name={product.name} />
+                          <ItemListProduct name={product.name} handleEditProduct={()=> {handleEditProduct(product)}} />
                       </li>
                   ))}
               </ul>
           </div>
-          Detalle del producto
+          <ProductsForm productSelected = {productSelected} setProductSelected={productSelected}/>
       </div>
   );
 };

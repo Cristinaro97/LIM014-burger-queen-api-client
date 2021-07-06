@@ -26,6 +26,16 @@ const Employess = () => {
      setUserSelected(user);
   }
 
+  const handleCreate = () => {
+    const newUser = {
+      name:'',
+      dni:'',
+      email:'',
+      phone:'',
+    }
+    setUserSelected(newUser);
+ }
+
   useEffect(() => {
         const token = localStorage.getItem("token");
         getAllUsers(token).then((response) => {
@@ -37,6 +47,8 @@ const Employess = () => {
   return (
     <div>
       <div>
+        <button onClick={handleCreate}>+ AGREGAR EMPLEADO</button>
+        <p>Ingrese datos del nuevo empleado</p>
         <h3> Listado de Empleados</h3>
         <ul>
           {users.map((user) => (
@@ -46,7 +58,7 @@ const Employess = () => {
           ))}
         </ul>
       </div>
-      <UserForm userSelected = {userSelected}/>
+      <UserForm userSelected = {userSelected} setUserSelected={setUserSelected}/>
     </div>
   );
 };

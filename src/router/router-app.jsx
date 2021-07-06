@@ -15,15 +15,11 @@ import Employess from '../containers/Employess';
 import Navigation from '../components/Navigation';
 import {
     PANEL_EMPLOYESS,
-    PANEL_PRODUCTS
 } from '../config';
 
 function RouterApp() {
 
     const [currentPanel, setCurrentPanel] = useState(PANEL_EMPLOYESS);
-
-   
-
 
     return (
         <MainPage>

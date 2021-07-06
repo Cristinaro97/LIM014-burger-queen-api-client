@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ItemList = ({name, handleEdit}) => {
+const ItemListProduct = ({name, handleEditProduct}) => {
     return ( 
         <div>
              {name}
-             <button onClick={handleEdit} ><span  class="material-icons">mode_edit</span></button>  
+             <button onClick={handleEditProduct} ><span  class="material-icons">mode_edit</span></button>  
              <button> <span  class="material-icons">delete_forever</span></button>  
             
         </div>
@@ -12,4 +12,4 @@ const ItemList = ({name, handleEdit}) => {
      );
 }
  
-export default ItemList;
+export default ItemListProduct;
