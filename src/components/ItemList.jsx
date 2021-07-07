@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ItemList = ({name, handleEdit}) => {
+const ItemList = ({name, handleEdit, handleDelete}) => {
     return ( 
         <div>
              {name}
-             <button onClick={handleEdit} ><span  class="material-icons">mode_edit</span></button>  
-             <button> <span  class="material-icons">delete_forever</span></button>  
+             <button onClick={handleEdit} ><span  className="material-icons">mode_edit</span></button>  
+             <button onClick={handleDelete}> <span  className="material-icons">delete_forever</span></button>  
             
         </div>
 

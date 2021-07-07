@@ -1,8 +1,12 @@
-$color : #69c2e2;
+$color : #073242;
 
 body{
     background-color: $color 
 
+}
+.grid{
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
 .menuPrincipal{
     background-color: #4BD095;
@@ -11,3 +15,4 @@ body{
 .menuOptions{
     list-style: none;
 }
+

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { END_POINT_PRODUCTS } from "../../config";
-import ItemListProduct from "../../components/ItemListProduct";
+import ItemList from "../../components/ItemList";
 import ProductsForm from "../../components/ProductForm";
+import { ACTION_CREATE, ACTION_EDIT } from "../../config";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [productSelected, setProductSelected] = useState();
+  const [action, setAction] = useState();
 
   const getAllProducts = async (access_token) => {
     const result = await axios
@@ -20,7 +22,7 @@ const Products = () => {
       });
     return result;
   };
-
+  
   useEffect(() => {
       const token = localStorage.getItem("token");
       getAllProducts(token).then((response)=> {
@@ -31,6 +33,7 @@ const Products = () => {
 
   const handleEditProduct = (product) => {
     setProductSelected(product);
+    setAction(ACTION_EDIT);
   }
 
   const handleCreateProduct = () => {
@@ -40,9 +43,28 @@ const Products = () => {
       dateEntry:'',
       price:'',
     }
-    setProductSelected(newProduct)
+    setProductSelected(newProduct);
+    setAction(ACTION_CREATE);
   }
 
+  const handleDeleteProduct = (id) => {
+    const access_token = localStorage.getItem("token");
+    axios
+    .delete(`${END_POINT_PRODUCTS}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    })
+    .then((resp) => {
+      console.log(resp);
+      getAllProducts(access_token).then((response) => {
+        setProducts(response.data);
+      });
+    })
+    .catch((error) => {
+      alert("ERROR OBTENIENDO USUARIOS DEL API");
+    });
+};
   return (
       <div>
           <div>
@@ -51,12 +73,21 @@ const Products = () => {
               <ul>
                   {products.map((product)=>(
                       <li key={product._id}>
-                          <ItemListProduct name={product.name} handleEditProduct={()=> {handleEditProduct(product)}} />
+                          <ItemList 
+                          name={product.name} handleEdit={()=> {handleEditProduct(product)}} 
+                          handleDeleteProduct={()=> {
+                            handleDeleteProduct(product._id);}}
+                            />
                       </li>
                   ))}
               </ul>
           </div>
-          <ProductsForm productSelected = {productSelected} setProductSelected={productSelected}/>
+          <ProductsForm 
+          productSelected = {productSelected} setProductSelected={setProductSelected}
+          action={action}
+          getAllProducts={getAllProducts}
+          setProducts={setProducts}
+          />
       </div>
   );
 };

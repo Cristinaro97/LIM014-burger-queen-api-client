@@ -6,3 +6,6 @@ export const END_POINT_PRODUCTS = `${URL_API}/products`;
 
 export const PANEL_EMPLOYESS = "employess";
 export const PANEL_PRODUCTS = "products";
+
+export const ACTION_EDIT='edit';
+export const ACTION_CREATE='create';

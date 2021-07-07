@@ -20,7 +20,7 @@ const Navigation = ({ setCurrentPanel }) => {
         </li>
       </ul>
       <button onClick={() => history.push("/")}>
-        <span class="material-icons">logout</span>
+        <span className="material-icons">logout</span>
       </button>
     </nav>
   );

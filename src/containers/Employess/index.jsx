@@ -3,10 +3,12 @@ import axios from "axios";
 import { END_POINT_USERS } from "../../config";
 import ItemList from "../../components/ItemList";
 import UserForm from "../../components/UserForm";
+import { ACTION_CREATE, ACTION_EDIT } from "../../config";
 
 const Employess = () => {
   const [users, setUsers] = useState([]);
   const [userSelected, setUserSelected] = useState();
+  const [action, setAction] = useState();
 
   const getAllUsers = async (access_token) => {
     const result = await axios
@@ -23,25 +25,46 @@ const Employess = () => {
   };
 
   const handleEdit = (user) => {
-     setUserSelected(user);
-  }
+    setUserSelected(user);
+    setAction(ACTION_EDIT);
+  };
 
   const handleCreate = () => {
     const newUser = {
-      name:'',
-      dni:'',
-      email:'',
-      phone:'',
-    }
+      name: "",
+      dni: "",
+      email: "",
+      phone: "",
+    };
     setUserSelected(newUser);
- }
+    setAction(ACTION_CREATE);
+  };
+
+  const handleDelete = (id) => {
+    const access_token = localStorage.getItem("token");
+    axios
+      .delete(`${END_POINT_USERS}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((resp) => {
+        console.log(resp);
+        getAllUsers(access_token).then((response) => {
+          setUsers(response.data);
+        });
+      })
+      .catch((error) => {
+        alert("ERROR OBTENIENDO USUARIOS DEL API");
+      });
+  };
 
   useEffect(() => {
-        const token = localStorage.getItem("token");
-        getAllUsers(token).then((response) => {
-            setUsers(response.data);
-            console.log("USUARIOS", users);
-        });
+    const token = localStorage.getItem("token");
+    getAllUsers(token).then((response) => {
+      setUsers(response.data);
+      console.log("USUARIOS", users);
+    });
   }, []);
 
   return (
@@ -53,12 +76,26 @@ const Employess = () => {
         <ul>
           {users.map((user) => (
             <li key={user._id}>
-              <ItemList name={user.name} handleEdit={()=>{handleEdit(user)}} />
+              <ItemList
+                name={user.name}
+                handleEdit={() => {
+                  handleEdit(user);
+                }}
+                handleDelete={() => {
+                  handleDelete(user._id);
+                }}
+              />
             </li>
           ))}
         </ul>
       </div>
-      <UserForm userSelected = {userSelected} setUserSelected={setUserSelected}/>
+      <UserForm
+        userSelected={userSelected}
+        setUserSelected={setUserSelected}
+        action={action}
+        getAllUsers={getAllUsers}
+        setUsers={setUsers}
+      />
     </div>
   );
 };

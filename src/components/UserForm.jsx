@@ -1,22 +1,58 @@
 import React, { Fragment } from "react";
 import axios from "axios";
-import handleEdit from "../containers/Employess/index"
-import handleCreate from "../containers/Employess/index"
+import { ACTION_CREATE, ACTION_EDIT, END_POINT_USERS } from "../config";
 
 const UserForm = (props) => {
-  const { userSelected, setUserSelected, saveUser } = props; // destructuracion
+  const { userSelected, setUserSelected, action, getAllUsers, setUsers } = props; // destructuracion
 
-  const saveData = () =>{
-    if (saveUser === handleEdit){
-      axios.put(userSelected)
-    } else if (saveUser === handleCreate){
-      axios.post(userSelected)
-    }
-    // si action = editar
-    //axios.put(userSelected)
-    // de lo contrario si action = crear 
-    //axios.post(userSelected)
+  const reloadList = (access_token) => {
+    getAllUsers(access_token).then((response) => {
+      setUsers(response.data);
+      setUserSelected(null);
+    });
   }
+
+  const saveData = () => {
+    const access_token = localStorage.getItem("token");
+
+    if (action === ACTION_EDIT) {
+      axios
+        .put(`${END_POINT_USERS}/${userSelected._id}`, userSelected, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        })
+        .then((response) => {
+          reloadList(access_token);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (action === ACTION_CREATE) {
+      axios
+        .post(
+          END_POINT_USERS,
+          {
+            ...userSelected,
+            password: "user",
+            roles: {
+              admin: false,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        )
+        .then((response) => {
+          reloadList(access_token);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   if (userSelected) {
     const onChangeHandler = (e) => {
@@ -61,10 +97,7 @@ const UserForm = (props) => {
           onChange={onChangeHandler}
         />
         <br />
-        <button 
-        onClick={saveData
-        }
-        >Guardar</button>
+        <button onClick={saveData}>Guardar</button>
         <br />
       </Fragment>
     );

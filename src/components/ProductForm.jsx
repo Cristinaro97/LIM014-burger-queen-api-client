@@ -1,7 +1,47 @@
 import React, { Fragment } from 'react';
+import axios from "axios";
+import { ACTION_CREATE, ACTION_EDIT, END_POINT_PRODUCTS } from "../config";
 
 const ProductsForm = (props) => {
-    const { productSelected, setProductSelected } = props;
+    const { productSelected, setProductSelected, action, getAllProducts, setProducts} = props;
+
+    const reloadListProduct = (access_token) => {
+        getAllProducts(access_token).then((response) => {
+            setProducts(response.data);
+            setProductSelected(null);
+        });
+    }
+
+    const saveDataProduct = () => {
+        const access_token = localStorage.getItem("token");
+
+        if (action === ACTION_EDIT) {
+            axios.put(`${END_POINT_PRODUCTS}/${productSelected._id}`,productSelected,{
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                  },
+            })
+            .then((response) => {
+                reloadListProduct(access_token);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+        } else if (action === ACTION_CREATE){
+            axios.post(
+                END_POINT_PRODUCTS,{
+                    headers: {
+                        Authorization: `Bearer ${access_token}`,
+                      },
+                }
+            ).then((response) => {
+                reloadListProduct(access_token);
+            }).catch((error) => {
+                console.log(error);
+            });
+            
+        }
+    };
 
     if(productSelected){
         const onChangeHandler = (e) => {
@@ -40,7 +80,8 @@ const ProductsForm = (props) => {
              value={productSelected.price}onChange={onChangeHandler}
             />
             <br />
-            <button>Guardar</button>
+            <button onClick={saveDataProduct}>Guardar</button>
+            <br />
         </Fragment>
      );
     } else {
