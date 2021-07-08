@@ -16,7 +16,11 @@ const ProductsForm = (props) => {
         const access_token = localStorage.getItem("token");
 
         if (action === ACTION_EDIT) {
-            axios.put(`${END_POINT_PRODUCTS}/${productSelected._id}`,productSelected,{
+            axios.put(`${END_POINT_PRODUCTS}/${productSelected._id}`,
+            {...productSelected,
+                price: parseInt(productSelected.price)
+            }
+            ,{
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                   },
@@ -29,7 +33,13 @@ const ProductsForm = (props) => {
               });
         } else if (action === ACTION_CREATE){
             axios.post(
-                END_POINT_PRODUCTS,{
+                END_POINT_PRODUCTS,
+                {
+                    ...productSelected,
+                    price: parseInt(productSelected.price)
+                },
+                {
+
                     headers: {
                         Authorization: `Bearer ${access_token}`,
                       },
@@ -64,13 +74,6 @@ const ProductsForm = (props) => {
              name="type"
              type="text"
              value={productSelected.type}onChange={onChangeHandler}
-            />
-            <br />
-            <label>Fecha de creación del producto:</label>
-            <input
-             name="dateEntry"
-             type="text"
-             value={productSelected.dateEntry}onChange={onChangeHandler}
             />
             <br />
             <label>Precio:</label>

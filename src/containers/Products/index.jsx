@@ -31,23 +31,22 @@ const Products = () => {
       });
   }, []);
 
-  const handleEditProduct = (product) => {
+  const handleEdit = (product) => {
     setProductSelected(product);
     setAction(ACTION_EDIT);
-  }
+  };
 
-  const handleCreateProduct = () => {
+  const handleCreate = () => {
     const newProduct = {
       name:'',
       type:'',
-      dateEntry:'',
       price:'',
     }
     setProductSelected(newProduct);
     setAction(ACTION_CREATE);
   }
 
-  const handleDeleteProduct = (id) => {
+  const handleDelete = (id) => {
     const access_token = localStorage.getItem("token");
     axios
     .delete(`${END_POINT_PRODUCTS}/${id}`, {
@@ -68,15 +67,16 @@ const Products = () => {
   return (
       <div>
           <div>
-          <button onClick={handleCreateProduct}>+ AGREGAR PRODUCTO</button>
+          <button onClick={handleCreate}>+ AGREGAR PRODUCTO</button>
+          <p>Ingrese los datos del nuevo producto</p>
               <h3>Lista de Productos</h3>
               <ul>
                   {products.map((product)=>(
                       <li key={product._id}>
                           <ItemList 
-                          name={product.name} handleEdit={()=> {handleEditProduct(product)}} 
-                          handleDeleteProduct={()=> {
-                            handleDeleteProduct(product._id);}}
+                          name={product.name} handleEdit={()=> {handleEdit(product)}} 
+                          handleDelete={()=> {
+                            handleDelete(product._id);}}
                             />
                       </li>
                   ))}

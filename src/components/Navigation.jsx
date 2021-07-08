@@ -1,6 +1,7 @@
 import React from "react";
 import { PANEL_EMPLOYESS, PANEL_PRODUCTS } from "../config";
 import { useHistory } from "react-router-dom";
+import Username from "../components/UsernameLogged";
 
 const Navigation = ({ setCurrentPanel }) => {
   const history = useHistory();
@@ -19,6 +20,7 @@ const Navigation = ({ setCurrentPanel }) => {
           </button>
         </li>
       </ul>
+      <Username/>
       <button onClick={() => history.push("/")}>
         <span className="material-icons">logout</span>
       </button>

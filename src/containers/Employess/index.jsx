@@ -71,7 +71,7 @@ const Employess = () => {
     <div>
       <div>
         <button onClick={handleCreate}>+ AGREGAR EMPLEADO</button>
-        <p>Ingrese datos del nuevo empleado</p>
+        <p>Ingrese los datos del nuevo empleado</p>
         <h3> Listado de Empleados</h3>
         <ul>
           {users.map((user) => (
